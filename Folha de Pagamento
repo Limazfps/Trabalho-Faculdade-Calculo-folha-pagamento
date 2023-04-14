@@ -1,0 +1,415 @@
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.time.LocalDate;
+import java.util.Scanner;
+
+public class Main {
+  public static void main(String[] args) {
+
+    Scanner console = new Scanner(System.in);
+
+    // Variaveis \\
+    
+    String mesatual = "";
+    String datadocontrato = "";
+    String nome = "";
+    String cargo = "";
+    String horasextras = "";
+    String faltas = "";
+    String periculosidade = "";
+    String insalubridade = "";
+    String nivelinsalubridade = "";
+    String valetransporte = "";
+    String valealimentacao = "";
+    String dependente = "";
+    String deducoes = "";
+    
+    int mes = 0;
+    int diasdefaltas = 0;
+    int diastrabalho = 0;
+    int valordependente = 0;
+
+    
+    double cpf = 0;
+    double salariobruto = 0;
+    double salarioliquido = 0;
+    double horassemana = 0;
+    double horasmensal = 0;
+    double salariohora = 0;
+    double horastrabalhadas = 0;
+    double horasextrastrabalhada = 0;
+    double valorhorasextras = 0;
+    double valorfaltas = 0;
+    double valorpericulosidade = 0;
+    double valorinsalubridade = 0;
+    double valorvaletransporte = 0;
+    double salario6 = 0;
+    double valorvalealimentacao = 0;
+    double INSS = 0;
+    double aliquotaefetiva = 0;
+    double FGTS = 0;
+    double IRRF = 0;
+    double salariobase = 0;
+    double valordeducoes = 0;
+    double basedecalculo = 0;
+    double valorIRRF = 0;
+    double aliquotaIRRF = 0;
+    double provento = 0;
+
+
+    // Mes \\
+
+    switch (mes) {
+            case 1: mesatual = "Janeiro";
+            break;
+            case 2: mesatual = "Fevereiro";
+            break;
+            case 3: mesatual = "Março";
+            break;
+            case 4: mesatual = "Abril";
+            break;
+            case 5: mesatual = "Maio";
+            break;
+            case 6: mesatual = "Junho";
+            break;
+            case 7: mesatual = "Julho";
+            break;
+            case 8: mesatual = "Agosto";
+            break;
+            case 9: mesatual = "Outubro";
+            break;
+            case 10: mesatual = "Setembro";
+            break;
+            case 11: mesatual = "Novembro";
+            break;
+            case 12: mesatual = "Dezembro";
+            break;
+            default: mesatual = "Nao foi possivel definir o mes";
+            break;
+        }
+
+    // Inicio \\
+
+    // Sobre o Funcionario \\
+
+    System.out.println("Bem Vindo ao Aplicativo Folha De Pagamento. ");
+
+    System.out.println("Digite o Nome do Funcionario Completo. ");
+    nome = console.nextLine();
+
+    System.out.println("Digite o CPF do Funcionario. ");
+    cpf = console.nextDouble();
+
+    System.out.println("Digite a data de Admissao do Funcionario: ");
+    datadocontrato = console.next();
+
+    System.out.println("Qual é o Cargo que o Funcionario ocupa na Empresa? ");
+    cargo = console.next();
+
+    System.out.println("Digite o Valor do Salário Bruto do FUncionario em Reais (R$). ");
+    salariobruto = console.nextDouble();
+
+    // Horas, Faltas e Dias De Trabalho \\
+
+    System.out.println("Quantos dias o funcionario trabalha na semana? ");
+    diastrabalho = console.nextInt();
+
+    System.out.println("Quantas Horas de Trabalho o Funcionario Realiza Diariamente? ");
+    horastrabalhadas = console.nextInt();
+
+    // Salario Horas \\
+
+    horassemana = horastrabalhadas * diastrabalho;
+
+    horasmensal = horassemana * 4;
+
+    salariohora = salariobruto / horasmensal;
+
+    while (!horasextras.equalsIgnoreCase("sim") && !horasextras.equalsIgnoreCase("não")) {
+
+      System.out.println("O Funcionaria Realizou Horas Extra? (Digite sim ou não)");
+      horasextras = console.next();
+
+      if (horasextras.equalsIgnoreCase("sim")) {
+
+        System.out.println("Digite Quantas Horas Extras o Funcionario Trabalhou.");
+        horasextrastrabalhada = console.nextDouble();
+
+        valorhorasextras = horasextrastrabalhada * salariohora;
+
+      } else if (horasextras.equalsIgnoreCase("não")) {
+
+        valorhorasextras = 0;
+
+      } else {
+
+        System.out.println("Digite apenas sim ou não");
+      }
+    }
+
+    while (!faltas.equalsIgnoreCase("sim") && !faltas.equalsIgnoreCase("não")) {
+
+      System.out.println("O Funcionaria Faltou ao Trabalho algum dia? (Digite sim ou não)");
+      faltas = console.next();
+
+      if (faltas.equalsIgnoreCase("sim")) {
+
+        System.out.println("Digite Quantos Dias o Funcionario Faltou ao Trabalho.");
+        diasdefaltas = console.nextInt();
+
+        valorfaltas = diasdefaltas * horastrabalhadas * salariohora;
+
+      } else if (faltas.equalsIgnoreCase("não")) {
+
+        valorfaltas = 0;
+
+      } else {
+
+        System.out.println("Digite apenas sim ou não");
+      }
+    }
+
+    // Vale Transporte \\
+
+    System.out.println("O Funcionario utilizou o Vale Transporte? (Digite sim ou não)");
+    valetransporte = console.next();
+
+    if (valetransporte.equalsIgnoreCase("sim")) {
+
+      System.out.println("Digite o Valor do Vala Transporte em Reais (R$): ");
+
+      valorvaletransporte = console.nextDouble();
+
+      salario6 = salariobruto * 6 / 100;
+
+      if (valorvaletransporte >= salario6); {
+
+        valorvaletransporte = salario6;
+      }
+
+      if (valorvaletransporte < salario6); {
+      }
+
+    } else if (valetransporte.equalsIgnoreCase("não")) {
+
+      valorvaletransporte = 0;
+
+    } else {
+
+      System.out.println("Digite apenas sim ou não");
+    }
+
+    // Vale Alimentção \\
+
+    System.out.println("O Funcionario utilizou o Vale Alimentação? (Digite sim ou não) ");
+    valealimentacao = console.next();
+
+    if (valealimentacao.equalsIgnoreCase("sim")) {
+
+      System.out.println("Digite o Valor do Vala Alimentação em Reais (R$): ");
+
+      valorvalealimentacao = console.nextDouble();
+
+    } else if (valealimentacao.equalsIgnoreCase("não")) {
+
+      valorvalealimentacao = 0;
+
+    } else {
+
+      System.out.println("Digite apenas sim ou não");
+    }
+
+    // Periculosidade \\
+
+    while (!periculosidade.equalsIgnoreCase("sim") && !periculosidade.equalsIgnoreCase("não")) {
+
+      System.out.println("A Função que o Funcionario exerce na empresa, é uma função considerada Perigosa por lei? que coloca a vida do funcionario em risco? (Digite apenas sim ou não). ");
+      periculosidade = console.next();
+
+      if (periculosidade.equalsIgnoreCase("sim")) {
+
+        valorpericulosidade = salariobruto * 30 / 100;
+
+      } else if (periculosidade.equalsIgnoreCase("não")) {
+
+        valorpericulosidade = 0;
+
+      } else {
+
+        System.out.println("Digite apenas sim ou não");
+      }
+    }
+
+    // Insalubridade \\
+
+    while (!insalubridade.equalsIgnoreCase("sim") && !insalubridade.equalsIgnoreCase("não")) {
+
+      System.out.println("O Ambiente que o funcionario trabalha, tras riscos a saúde dele? (Digite apenas sim ou não)");
+      insalubridade = console.next();
+
+      if (insalubridade.equalsIgnoreCase("sim")) {
+
+        while (!nivelinsalubridade.equalsIgnoreCase("baixo") && !nivelinsalubridade.equalsIgnoreCase("medio")
+            && !nivelinsalubridade.equalsIgnoreCase("alto")) {
+
+          System.out.println("Informe o grau de risco que o trabalhador está exposto. (baixo/medio/alto) ");
+          nivelinsalubridade = console.next();
+
+          if (nivelinsalubridade.equalsIgnoreCase("baixo")) {
+
+            valorinsalubridade = 1380.60 * 10 / 100;
+
+          } else if (nivelinsalubridade.equalsIgnoreCase("medio")) {
+
+            valorinsalubridade = 1380.60 * 20 / 100;
+
+          } else if (nivelinsalubridade.equalsIgnoreCase("alto")) {
+
+            valorinsalubridade = 1380.60 * 40 / 100;
+
+          } else {
+
+            System.out.println("Digite apenas (baixo/medio/alto)");
+          }
+        }
+
+      } else if (insalubridade.equalsIgnoreCase("não")) {
+
+        valorinsalubridade = 0;
+
+      } else {
+
+        System.out.println("Digite apenas sim ou não");
+      }
+    }
+
+      // INSS e Aliquota Efetiva \\
+
+      if (salariobruto <= 1302.00) { // 1 faixa ate 1302 bruto
+
+        INSS = salariobruto * 7.5 / 100;
+
+      } else if (salariobruto <= 2571.29) { // 2 faixa
+
+        INSS = (salariobruto - 1302.00) * 9 / 100 + 97.65;
+
+      } else if (salariobruto <= 3856.94) { // 3 faixa
+
+        INSS = (salariobruto - 2571.29) * 12 / 100 + 211.89;
+
+      } else if (salariobruto <= 7507.49) { // 4 faixa
+
+        INSS = (salariobruto - 3856.94) * 14 / 100 + 366.16;
+
+      } else {
+
+        INSS = 877.24;
+      }
+
+      aliquotaefetiva = INSS / salariobruto;
+
+      // FGTS \\
+
+      FGTS = salariobruto * 8 / 100;
+
+      // IRRF \\
+
+      salariobase = salariobruto - INSS;
+
+      while (!dependente.equalsIgnoreCase("sim") && !dependente.equalsIgnoreCase("não")) {
+
+        System.out.println("O Funcionario possui algum Dependente? (Digite apenas sim ou não) ");
+        dependente = console.next();
+
+        if (dependente.equalsIgnoreCase("sim")) {
+
+          System.out.println("Digite Quantos dependente o Funcionario possui.");
+          valordependente = console.nextInt();
+
+        } else if (dependente.equalsIgnoreCase("não")) {
+
+          valordependente = 0;
+
+        } else {
+
+          System.out.println("Digite apenas sim ou não");
+        }
+      }
+
+      while (!deducoes.equalsIgnoreCase("sim") && !deducoes.equalsIgnoreCase("não")) {
+
+        System.out.println("O Funcionario possui outras deducoes? (Digite apenas sim ou não)");
+        deducoes = console.next();
+
+        if (deducoes.equalsIgnoreCase("sim")) {
+
+          System.out.println("Digite o Valor dessas Deduções em Reais (R$).");
+          valordeducoes = console.nextDouble();
+
+        } else if (deducoes.equalsIgnoreCase("não")) {
+
+          valordeducoes = 0;
+
+        } else {
+
+          System.out.println("Digite apenas sim ou não");
+        }
+      }
+
+      basedecalculo = salariobase - 189.59 * valordependente - valordeducoes;
+
+      if (basedecalculo <= 1903.98) {
+
+        valorIRRF = 0;
+
+      } else if (basedecalculo <= 2826.65) {
+
+        valorIRRF = (basedecalculo - 142.80) * 7.5 / 100;
+
+      } else if (basedecalculo <= 3751.05) {
+
+        valorIRRF = (basedecalculo - 354.80) * 15 / 100;
+
+      } else if (basedecalculo <= 4664.68) {
+
+        valorIRRF = (basedecalculo - 636.13) * 22.5 / 100;
+
+      } else {
+
+        valorIRRF = (basedecalculo - 869.36) * 27.5 / 100;
+      }
+
+      aliquotaIRRF = valorIRRF / salariobruto;
+
+    // Provento \\
+
+    provento = valorhorasextras + valorpericulosidade + valorinsalubridade;
+
+    // Salario Liquido \\
+
+      salarioliquido = salariobruto + valorhorasextras - valorfaltas - valorvaletransporte - valorvalealimentacao
+          + valorpericulosidade + valorinsalubridade - INSS - FGTS - valorIRRF;
+
+
+    // Resultado \\
+
+    System.out.println("Mes de Referencia: " + mesatual);
+    System.out.println("O Funcionario de Nome: " + nome);
+    System.out.println("Com Data de Admissao em: " + datadocontrato);
+    System.out.println("Que Exerce ao Cargo de: " + cargo);
+    System.out.println("Possui um Salario Liquido de: " + salarioliquido + " Reais (R$) ");
+    System.out.println("Recebe um Salario por Hora de: " + salariohora + " Reais (R$) ");
+    System.out.println("Com um Provento de: " + provento + " Reais (R$) ");
+    System.out.println("Adicional De Periculosidade de: " + valorpericulosidade + " Reais (R$) ");
+    System.out.println("Adicional De Insalubridade de: " + valorinsalubridade + " Reais (R$) ");
+    System.out.println("Vale Alimentacao no valor de: " + valorvalealimentacao + " Reais (R$) ");
+    System.out.println("Vale Transporte no valor de: " + valorvaletransporte + " Reais (R$) ");
+    System.out.println("Com uma quantidade de Horas extras de " + horasextrastrabalhada + " Que Recebera " + valorhorasextras + " Reais (R$) ");
+    System.out.println("A quantidade de faltas foi de: " + diasdefaltas + "Dias, que Descontara" + valorfaltas + " Reais (R$) ");
+    System.out.println("O Valor do INSS a ser descontado é: " + INSS + " Reais (R$) ");
+    System.out.println("O Valor do FGTS a ser descontado é: " + FGTS + " Reais (R$) ");
+    System.out.println("O Valor do IRFF a ser descontado é: " + valorIRRF + " Reais (R$) ");
+    System.out.println("Possui um Salario Bruto de: " + salariobruto + " Reais (R$) ");
+    
+    }
+  }
